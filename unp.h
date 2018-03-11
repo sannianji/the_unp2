@@ -9,8 +9,11 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <mqueue.h>
+#define SERV_FIFO "/tmp/fifo.serv"
 #define FILE_MODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 #define MAXLINE 1024
 #define FIFO1 "/tmp/fifo.1"
 #define FIFO2 "/tmp/fifo.2"
+
 #endif
