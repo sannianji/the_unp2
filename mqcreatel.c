@@ -5,6 +5,12 @@ static void err_quit(const char *str)
 	fflush(stdout);
 	exit(-1);
 }
+static void err_sys(const char *str1,const char *str2)
+{
+	printf(str1,str2);
+	fflush(stdout);
+	exit(-1);
+}
 int main(int argc,char **argv)
 {
 	int c,flags;
@@ -18,12 +24,15 @@ int main(int argc,char **argv)
 			case 'e':
 				flags|=O_EXCL;
 				break;
+			case '?':
+				exit(1);
 		}
 	}
 	if(optind!=argc-1)
-		err_quit("usage: mqcreate [-e] <name>");
+		err_quit("usage: mqcreate [-e] <name>\n");
 
-	mqd=mq_open(argv[optind],flags,FILE_MODE,NULL);
+	if((mqd=mq_open(argv[optind],flags,FILE_MODE,NULL))<0)
+		err_sys("mq_open error:%s\n",strerror(errno));
 
 	mq_close(mqd);
 	exit(0);
