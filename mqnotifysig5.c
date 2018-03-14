@@ -5,15 +5,32 @@ static void sig_usr1(int);
 static void err_quit(const char *str1)
 {
 	fputs(str1,stderr);
+	fprintf(stderr,"\n");
 	fflush(stderr);
 	exit(-1);
 }
 static void err_sys(const char *str)
 {
 	fputs(str,stderr);
-	fprintf(stderr," error:%s",strerror(errno));
+	fprintf(stderr," error:%s\n",strerror(errno));
 	fflush(stderr);
 	exit(-1);
+}
+
+int Select(int nfds,fd_set* readfds,fd_set* writefds,fd_set* exceptfds,struct timeval* timeout)
+{
+	int n;
+again:
+	if((n=select(nfds,readfds,writefds,exceptfds,timeout))<0)
+	{
+		if(errno==EINTR)
+			goto again;
+		else
+			err_sys("select error");
+	}
+	else if(n==0&&timeout==NULL)
+		err_quit("select return 0 with no timeout");
+	return (n);
 }
 int main(int argc,char **argv)
 {
@@ -50,14 +67,8 @@ int main(int argc,char **argv)
 	for(;;)
 	{
 		FD_SET(pipefd[0],&rset);
-		again:
-		if((nfds=select(pipefd[0]+1,&rset,NULL,NULL,NULL))<0)
-		{
-			if(errno==EINTR)
-				goto again;
-			else
-				err_sys("select");
-		}
+		nfds=Select(pipefd[0]+1,&rset,NULL,NULL,NULL);
+		
 		if(FD_ISSET(pipefd[0],&rset))
 		{
 			if(read(pipefd[0],&c,1)<0)
@@ -65,11 +76,11 @@ int main(int argc,char **argv)
 			if(mq_notify(mqd,&sigev)<0)
 				err_sys("mq_notify");
 
-			while((n=-mq_receive(mqd,buff,attr.mq_msgsize,NULL))>=0)
+			while((n=mq_receive(mqd,buff,attr.mq_msgsize,NULL))>=0)
 				printf("read %ld bytes\n",(long)n);
 		
 			if(errno!=EAGAIN)
-				err_sys("mq_receive error");
+				err_sys("mq_receive");
 		}
 	}
 	exit(0);
