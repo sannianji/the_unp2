@@ -28,6 +28,7 @@
 #define MY_DATA 8
 struct my_msgbuf;
 struct msgbuf;
+int min(int,int);
 //typedef void Sigfunc_rt(int,siginfo_t *,void *);
 //Sigfunc_rt* signal_rt(int signo,Sigfunc_rt *func,sigset_t *mask);
 void err_msg(const char*,...);
