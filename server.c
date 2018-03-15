@@ -1,10 +1,4 @@
 #include "unp.h"
-static void err_quit(const char * str1)
-{
-	printf("%s",str1);
-	fflush(stdout);
-	exit(-1);
-}
 void server(int readfd,int writefd)
 {
 	int fd;

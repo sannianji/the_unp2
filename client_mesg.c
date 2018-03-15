@@ -7,9 +7,9 @@ void client(int readfd,int writefd)
 	ssize_t n;
 	struct mymesg mesg;
 	
-	fgets(mesg.data,MAXMESGDATA,stdin);
-	len=strlen(mesg.data);
-	if(mesg.data[len-1]=='\n')
+	fgets(mesg.mesg_data,MAXMESGDATA,stdin);
+	len=strlen(mesg.mesg_data);
+	if(mesg.mesg_data[len-1]=='\n')
 		len--;
 	mesg.mesg_len=len;
 	mesg.mesg_type=1;

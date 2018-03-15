@@ -58,5 +58,45 @@ int mq_send(mqd_t mqd,const char *pthr,size_t len,unsigned int prio)
 	if((freeindex=mqhdr->mqh_free)==0)
 		err_dump("mq_send: curmsgs=%ld,free=0",attr->mq_curmsgs);
 
-	nmsghdr=(*struct msg_hdr *)&mptr
+	nmsghdr=(*struct msg_hdr *)&mptr[freeindex];
+	nmsghdr->msg_prio=prio;
+	nmsghdr->msg_len=len;
+	memcpy(nmsghdr+1,ptr,len);
+	mqhdr->mqh_free=nmsghdr->msg_next;
+
+	index=mqhdr->mqh_head;
+	pmsghdr=(struct msg_hdr*)&(mqhdr->mqh_head);
+
+	while(index!=0)
+	{
+		msghdr=(struct msg_hdr*)&mptr[index];
+		if(prio>msghdr->msg_prio)
+		{
+			nmsghdr->msg_next=index;
+			pmsghdr->msg_next=freeindex;
+			break;		
+		}
+		index=msghdr->msg_next;
+		pmsghdr=msghdr;
+	}
+
+	if(index==0)
+	{
+		pmsghdr->msg_next=freeindex;
+		nmsghdr->msg_next=0;
+	}
+
+	if(attr->mq_curmsgs==0)
+	{
+		pthread_cond_signal(&mqhdr->mqh_lock);
+	}
+
+	attr->mq_curmsgs++;
+	
+	pthread_mutex_unlock(&mqhdr->mqh_lock);
+	return 0;
+
+err:
+	pthread_mutex_unlock(&mqhdr->mqh_lock);
+	return -1;
 }

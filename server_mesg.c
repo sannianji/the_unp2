@@ -17,7 +17,7 @@ void server(int readfd,int writefd)
 	{
 		snprintf(mesg.mesg_data+n,sizeof(mesg.mesg_data)-n,"can't open,%s\n",strerror(n));
 		mesg.mesg_len=strlen(mesg.mesg_data);
-		mesg.seng(writefd,&mesg);
+		mesg_send(writefd,&mesg);
 	}
 	else
 	{

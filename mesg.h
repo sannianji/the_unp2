@@ -11,4 +11,4 @@ struct mymesg
 };
 
 ssize_t mesg_send(int,struct mymesg*);
-ssize_t mesg_recv(int struct mymesg*);
+ssize_t mesg_recv(int,struct mymesg*);
