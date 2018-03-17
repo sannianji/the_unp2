@@ -49,7 +49,7 @@ void my_lock(int fd)
 	lock.l_start=0;
 	lock.l_len=0;
 
-	if(fcntl(fd,F_SETLK,&lock)<0)
+	if(fcntl(fd,F_SETLKW,&lock)<0)
 		err_sys("fcntl F_SETLK");
 }
 
