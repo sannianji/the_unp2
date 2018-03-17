@@ -1,5 +1,6 @@
 #ifndef __UNP_H
 #define __UNP_H
+#include <semaphore.h>
 #include <stdarg.h>
 #include <fcntl.h>
 #include <sys/wait.h>
