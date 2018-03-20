@@ -18,6 +18,10 @@ int main(int argc,char **argv)
 	nitems=atoi(argv[1]);
 
 	if(sem_init(&shared.mutex,0,1)==-1)
-		err_sys("sem_init");
-	if(sem_init(&shared.))
+		err_sys("shared.mutex sem_init");
+	if(sem_init(&shared.nempty,0,NBUFF)<0)
+		err_sys("shared.nempty sem_init");
+	if(sem_init(&shared.nstored,0,1)==-1)
+		err_sys("shared.nstored sem_init");
+
 }
