@@ -1,0 +1,5 @@
+#!/bin/bash
+for((i=0;i<999;i++))
+do
+	./prodcons3_pxsem 999 999999
+done
