@@ -11,7 +11,7 @@ struct {
 }shared;
 
 void *produce(void*),*consume(void *);
-int nitems,nproducers,count[MAXNTHREADS];
+int nitems,nproducers;
 int main(int argc,char **argv)
 {
 	int i;
@@ -31,12 +31,14 @@ int main(int argc,char **argv)
 		err_sys("sem_init shared.nstored");
 	
 	for(i=0;i<nproducers;i++)
+	{
+		count[i]=0;	
 		if((err=pthread_create(&tid_produce[i],NULL,produce,&count[i]))!=0)
 		{
 			errno=err;
 			err_sys("produce pthread_create");
 		}
-
+	}
 	if((err=pthread_create(&tid_consume,NULL,consume,NULL))!=0)
 	{
 		errno=err;
