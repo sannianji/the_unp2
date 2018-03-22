@@ -28,6 +28,7 @@
 #define FIFO1 "/tmp/fifo.1"
 #define FIFO2 "/tmp/fifo.2"
 #define MY_DATA 8
+#define BUFFSIZE 1024
 struct my_msgbuf;
 struct msgbuf;
 int min(int,int);
