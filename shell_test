@@ -1,5 +1,5 @@
 #!/bin/bash
-for((i=0;i<1;i++))
+for((i=0;i<1000;i++))
 do
-	./prodcons3_pxsem 10 99
+	./mycat2 mycat2.c
 done
