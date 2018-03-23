@@ -28,15 +28,25 @@ void err_msg(const char *str,...)
 	exit(-1);
 }
 
-void err_sys(const char *str)
+void err_sys(const char *str,...)
 {
-	fputs(str,stderr);
-	fprintf(stderr," error:%s\n",str);
+	va_list ap;
+	va_start(ap,str);
+	char buf[MAXLINE];
+	vsnprintf(buf,sizeof(buf),str,ap);
+	va_end(ap);
+	fputs(buf,stderr);
+	fprintf(stderr," error:%s\n",strerror(errno));
 	exit(-1);
 }
 
-void err_quit(const char* str)
+void err_quit(const char* str,...)
 {
-	fputs(str,stderr);
+	va_list ap;
+	va_start(ap,str);
+	char buf[MAXLINE];
+	vsnprintf(buf,sizeof(buf),str,ap);
+	va_end(ap);
+	fputs(buf,stderr);
 	exit(-1);
 }

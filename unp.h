@@ -28,14 +28,15 @@
 #define FIFO1 "/tmp/fifo.1"
 #define FIFO2 "/tmp/fifo.2"
 #define MY_DATA 8
+#define BUFFSIZE 1024
 struct my_msgbuf;
 struct msgbuf;
 int min(int,int);
 //typedef void Sigfunc_rt(int,siginfo_t *,void *);
 //Sigfunc_rt* signal_rt(int signo,Sigfunc_rt *func,sigset_t *mask);
 void err_msg(const char*,...);
-void err_sys(const char *str);
-void err_quit(const char *str);
+void err_sys(const char *str,...);
+void err_quit(const char *str,...);
 int lock_reg(int,int,int,off_t,int,off_t);
 pid_t lock_test(int,int,off_t,int,off_t);
 char *Gf_time(void);
