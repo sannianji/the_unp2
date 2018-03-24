@@ -29,6 +29,7 @@
 #define FIFO2 "/tmp/fifo.2"
 #define MY_DATA 8
 #define BUFFSIZE 1024
+#define SVSEM_MODE (SEM_R|SEM_A|SEM_R>>3|SEM_R>>6)
 struct my_msgbuf;
 struct msgbuf;
 int min(int,int);
