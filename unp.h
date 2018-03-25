@@ -20,6 +20,7 @@
 #include <sys/msg.h>
 #include <sys/ipc.h>
 #include <limits.h>
+#include <sys/mman.h>
 #define SERV_FIFO "/tmp/fifo.serv"
 #define FILE_MODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 #define MSG_R 0400
