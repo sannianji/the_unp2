@@ -48,5 +48,6 @@ void err_quit(const char* str,...)
 	vsnprintf(buf,sizeof(buf),str,ap);
 	va_end(ap);
 	fputs(buf,stderr);
+	fputs("\n",stderr);
 	exit(-1);
 }

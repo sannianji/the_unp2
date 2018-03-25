@@ -18,11 +18,11 @@ int main(int argc,char **argv)
 	if(optind!=argc-2)
 		err_quit("usage: svsem_create [-e] <pathname> <nsems>");
 
-	nsems=atoi(argv[optind]);
+	nsems=atoi(argv[optind+1]);
 	if((key=ftok(argv[optind],0))<0)
 		err_sys("ftok");
 
-	if((semid=semget(key,nsems,oflag))<0)
+	if((semid=semget(key,nsems,oflag))==-1)
 		err_sys("semget");
 	
 	exit(0);
