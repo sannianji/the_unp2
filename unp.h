@@ -36,6 +36,7 @@
 #define SVSEM_MODE (SEM_R|SEM_A|SEM_R>>3|SEM_R>>6)
 struct my_msgbuf;
 struct msgbuf;
+int max(int,int);
 int min(int,int);
 //typedef void Sigfunc_rt(int,siginfo_t *,void *);
 //Sigfunc_rt* signal_rt(int signo,Sigfunc_rt *func,sigset_t *mask);
