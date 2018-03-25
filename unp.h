@@ -43,6 +43,7 @@ int min(int,int);
 void err_msg(const char*,...);
 void err_sys(const char *str,...);
 void err_quit(const char *str,...);
+void err_ret(const char *str,...);
 int lock_reg(int,int,int,off_t,int,off_t);
 pid_t lock_test(int,int,off_t,int,off_t);
 char *Gf_time(void);
