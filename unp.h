@@ -1,5 +1,6 @@
 #ifndef __UNP_H
 #define __UNP_H
+#include <sys/sem.h>
 #include <semaphore.h>
 #include <stdarg.h>
 #include <fcntl.h>
@@ -19,6 +20,7 @@
 #include <sys/msg.h>
 #include <sys/ipc.h>
 #include <limits.h>
+#include <sys/mman.h>
 #define SERV_FIFO "/tmp/fifo.serv"
 #define FILE_MODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 #define MSG_R 0400
@@ -29,17 +31,27 @@
 #define FIFO2 "/tmp/fifo.2"
 #define MY_DATA 8
 #define BUFFSIZE 1024
+#define SEM_R 0400
+#define SEM_A 0200
+#define SVSEM_MODE (SEM_R|SEM_A|SEM_R>>3|SEM_R>>6)
 struct my_msgbuf;
 struct msgbuf;
+int max(int,int);
 int min(int,int);
 //typedef void Sigfunc_rt(int,siginfo_t *,void *);
 //Sigfunc_rt* signal_rt(int signo,Sigfunc_rt *func,sigset_t *mask);
 void err_msg(const char*,...);
 void err_sys(const char *str,...);
 void err_quit(const char *str,...);
+void err_ret(const char *str,...);
 int lock_reg(int,int,int,off_t,int,off_t);
 pid_t lock_test(int,int,off_t,int,off_t);
 char *Gf_time(void);
+union semun{
+	int val;
+	struct semid_ds* buf;
+	unsigned short *array;
+};
 #define read_lock(fd,offset,whence,len) lock_reg(fd,F_SETLK,F_RDLCK,offset,whence,len)
 #define readw_lock(fd,offset,whence,len) lock_reg(fd,F_SETLKW,F_RDLCK,offset,whence,len)
 #define write_lock(fd,offset,whence,len) lock_reg(fd,F_SETLK,F_WRLCK,offset,whence,len)

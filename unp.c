@@ -3,6 +3,10 @@ int min(int n1,int n2)
 {
 	return (n1>n2)?n2:n1;
 }
+int max(int n1,int n2)
+{
+	return (n1>n2)?n1:n2;
+}
 typedef struct msgbuf
 {
 	long mtype;
@@ -48,5 +52,18 @@ void err_quit(const char* str,...)
 	vsnprintf(buf,sizeof(buf),str,ap);
 	va_end(ap);
 	fputs(buf,stderr);
+	fputs("\n",stderr);
 	exit(-1);
+}
+void err_ret(const char *str,...)
+{
+	va_list ap;
+	va_start(ap,str);
+	char buf[MAXLINE];
+	vsnprintf(buf,sizeof(buf),str,ap);
+	va_end(ap);
+	if(buf[strlen(buf)-1]!='\n')
+		buf[strlen(buf)]='\n';
+	fputs(buf,stderr);
+	exit(0);
 }
