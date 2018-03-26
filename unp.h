@@ -21,11 +21,15 @@
 #include <sys/ipc.h>
 #include <limits.h>
 #include <sys/mman.h>
+#include <sys/shm.h>
 #define SERV_FIFO "/tmp/fifo.serv"
 #define FILE_MODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 #define MSG_R 0400
 #define MSG_W 0200
 #define SVMSG_MODE (MSG_R|MSG_W|MSG_R>>3|MSG_R>>6)
+#define SEM_R 0400
+#define SEM_W 0200
+#define SVSHM_MODE (SEM_R|SEM_W|SEM_R>>3|SEM_R>>6)
 #define MAXLINE 1024
 #define FIFO1 "/tmp/fifo.1"
 #define FIFO2 "/tmp/fifo.2"
