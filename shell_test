@@ -1,5 +1,5 @@
 #!/bin/bash
-for((i=0;i<1000;i++))
-do
-	./mycat2 mycat2.c
-done
+
+./pxshm_client1 shm1 sem1 10000&
+./pxshm_client1 shm1 sem1 10000&
+./pxshm_client1 shm1 sem1 10000&
