@@ -3,7 +3,7 @@ int main(int argc,char **argv)
 {
 	int c,oflag,semid,nsems;
 	int key;
-	oflag=SVSEM_MODE|IPC_CREAT;
+	oflag=S_IRUSR|S_IWUSR|IPC_CREAT;
 	while((c=getopt(argc,argv,"e"))!=-1)
 	{
 		switch(c)
